@@ -1,16 +1,9 @@
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
-# Install dependencies
+# Install required system packages
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip unzip curl \
-    sqlite3 libsqlite3-dev \
-    git \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+    sqlite3 libsqlite3-dev zip unzip curl git \
+    && docker-php-ext-install pdo pdo_sqlite
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -18,12 +11,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www
 
+# Copy all project files
 COPY . .
 
-RUN composer install
+# Set permissions
+RUN chmod -R 775 storage bootstrap/cache
 
-# Permissions
-RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www/storage
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-CMD ["php-fpm"]
+# Laravel app key
+RUN php artisan config:clear && php artisan key:generate
+
+EXPOSE 10000
+
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]

@@ -10,6 +10,9 @@ WORKDIR /var/www
 
 COPY . .
 
+# ✅ Ensure .env exists
+COPY .env.example .env
+
 RUN chmod -R 775 storage bootstrap/cache
 RUN composer install --no-dev --optimize-autoloader
 

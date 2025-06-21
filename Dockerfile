@@ -15,6 +15,9 @@ WORKDIR /var/www
 # Copy Laravel project files
 COPY . .
 
+# ✅ Copy .env file for Laravel to run commands like key:generate
+COPY .env.example .env
+
 # ✅ Set permissions for storage and cache
 RUN chmod -R 775 storage bootstrap/cache
 

@@ -3,85 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jai Shree Ram</title>
+  <title>Volt Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Georgia', serif;
-      background: url('https://wallpaperaccess.com/full/1979001.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff3cd;
-      text-align: center;
-      animation: fadeIn 2s ease-in;
+      overflow-x: hidden;
     }
-
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.7);
+    .sidebar {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    h1 {
-      font-size: 4rem;
-      color: #ffd700;
-      margin-bottom: 1rem;
-      text-shadow: 2px 2px 10px #000;
-    }
-
-    p {
-      font-size: 1.5rem;
-      color: #ffffff;
-      max-width: 800px;
-      margin: auto;
-      line-height: 1.6;
-      text-shadow: 1px 1px 5px #000;
-    }
-
-    .btn {
-      margin-top: 2rem;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      color: #fff;
-      background: #d97706;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-
-    .btn:hover {
-      background: #b45309;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    footer {
-      margin-top: 3rem;
-      font-size: 1rem;
-      color: #eee;
     }
   </style>
 </head>
-<body>
-  <div class="overlay">
-    <h1>🚩 जय श्री राम 🚩</h1>
-    <p>
-      श्रीराम का नाम कलियुग में सबसे बड़ा मंत्र है।<br>
-      ये नाम हर दुःख और संकट से रक्षा करता है।<br>
-      राम ही सत्य हैं, राम ही शक्ति हैं।<br>
-      आइये मिलकर राम नाम का गुणगान करें।
-    </p>
-    <button class="btn" onclick="alert('🚩 Jai Shree Ram! 🚩')">बोलो जय श्री राम!</button>
+<body class="d-flex">
 
-    <footer>© 2025 || Jai Shree Ram || श्री राम जी की कृपा बनी रहे</footer>
+<!-- Sidebar -->
+<nav class="sidebar bg-dark text-white p-3" style="width: 250px;">
+  <a href="#" class="d-flex align-items-center mb-3 text-white text-decoration-none">
+    <span class="fs-4">⚡ Volt Overview</span>
+  </a>
+  <hr class="text-secondary">
+
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <a href="#" class="nav-link active bg-primary text-white">
+        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link text-white">
+        <i class="bi bi-kanban me-2"></i> Kanban <span class="badge bg-warning text-dark ms-1">Pro</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link text-white">
+        <i class="bi bi-currency-dollar me-2"></i> Transactions
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link text-white">
+        <i class="bi bi-gear me-2"></i> Settings
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link text-white">
+        <i class="bi bi-calendar-week me-2"></i> Calendar <span class="badge bg-warning text-dark ms-1">Pro</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link text-white">
+        <i class="bi bi-map me-2"></i> Map <span class="badge bg-warning text-dark ms-1">Pro</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link text-white">
+        <i class="bi bi-table me-2"></i> Tables
+      </a>
+    </li>
+    <li>
+      <a href="#" class="nav-link text-white">
+        <i class="bi bi-layers me-2"></i> Components
+      </a>
+    </li>
+  </ul>
+
+  <hr class="text-secondary">
+  <div>
+    <a href="#" class="btn btn-warning w-100 mb-2">Upgrade to Pro</a>
+    <a href="#" class="text-white-50 text-decoration-none">Documentation v1.4</a>
   </div>
+</nav>
+
+<!-- Main Content -->
+<div class="flex-grow-1 p-4">
+  <h1 class="mb-4">Dashboard</h1>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Customers</h5>
+          <p class="fs-4">345k</p>
+          <p class="text-success">+22% since last month</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Revenue</h5>
+          <p class="fs-4">$43,594</p>
+          <p class="text-danger">-2% since last month</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Bounce Rate</h5>
+          <p class="fs-4">50.88%</p>
+          <p class="text-success">-4% since last month</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h5 class="mb-0">Page Visits</h5>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Page Name</th>
+            <th>Page Views</th>
+            <th>Page Value</th>
+            <th>Bounce Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>/demo/admin/index.html</td>
+            <td>3,225</td>
+            <td>$20</td>
+            <td class="text-danger">42.55%</td>
+          </tr>
+          <tr>
+            <td>/demo/admin/forms.html</td>
+            <td>2,987</td>
+            <td>0</td>
+            <td class="text-success">43.24%</td>
+          </tr>
+          <tr>
+            <td>/demo/admin/util.html</td>
+            <td>2,844</td>
+            <td>294</td>
+            <td class="text-success">32.35%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

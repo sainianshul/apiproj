@@ -27,7 +27,7 @@
 
         <div class="mb-3">
             <label for="token" class="form-label">Admin Token</label>
-            <input type="password" name="token" id="token" class="form-control" placeholder="Enter admin token (e.g. admin@123)" required>
+            <input type="password" name="token" id="token" class="form-control" placeholder="Enter admin token" required>
         </div>
 
         <div class="mb-3">

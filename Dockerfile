@@ -2,8 +2,9 @@ FROM php:8.2-cli
 
 # Install PHP extensions & system dependencies
 RUN apt-get update && apt-get install -y \
-    sqlite3 libsqlite3-dev zip unzip curl git \
-    && docker-php-ext-install pdo pdo_sqlite
+    zip unzip curl git libpng-dev libonig-dev libxml2-dev \
+    libzip-dev libssl-dev libcurl4-openssl-dev \
+    && docker-php-ext-install pdo pdo_mysql
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -14,22 +15,19 @@ WORKDIR /var/www
 # Copy Laravel project files
 COPY . .
 
-# Ensure .env file exists
+# ✅ Copy .env file for Laravel to run commands like key:generate
 COPY .env.example .env
 
-# Create SQLite file if not exists
-RUN mkdir -p database && touch database/database.sqlite
-
-# Set permissions
+# ✅ Set permissions for storage and cache
 RUN chmod -R 775 storage bootstrap/cache
 
-# Install dependencies
+# ✅ Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Expose port
+# ✅ Expose the Laravel server port
 EXPOSE 10000
 
-# ✅ Run key generate, migrate, then start server
+# ✅ Run Laravel setup commands
 CMD php artisan key:generate \
  && php artisan migrate --force \
  && php artisan serve --host=0.0.0.0 --port=10000

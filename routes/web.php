@@ -41,3 +41,4 @@ Route::post('/artisan-runner', function (Request $request) {
         'output' => $output
     ]);
 });
+

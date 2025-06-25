@@ -17,6 +17,8 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
 
+        return response()->json($request->all());
+
         $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,

@@ -17,7 +17,11 @@ RUN chmod -R 775 storage bootstrap/cache
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN composer install --no-dev --optimize-autoloader
+# Skip scripts that require DB
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Later manually run artisan commands (DB-safe)
+RUN php artisan package:discover || true
 
 EXPOSE 10000
 

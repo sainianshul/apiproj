@@ -1,25 +1,39 @@
-<?php
-
+<?php 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\NoteController;
-
-Route::get('test', function (Request $request) {
-    return response()->json(['message' => 'API is working']);
+Route::get('/status', function () {
+    if (!Storage::exists('data/status.json')) {
+        Storage::put('data/status.json', json_encode(['status' => false], JSON_PRETTY_PRINT));
+    }
+    $json = Storage::get('data/status.json');
+    return response()->json(json_decode($json, true));
 });
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/status', function (Request $request) {
+    $validated = $request->validate([
+        'status' => 'required|boolean',
+    ]);
+    Storage::put('data/status.json', json_encode($validated, JSON_PRETTY_PRINT));
+    return response()->json(['message' => 'Status saved', 'data' => $validated], 201);
+});
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/profile', [AuthController::class, 'profile']);
-    Route::post('/logout', [AuthController::class, 'logout']);
-      Route::get('/notes', [NoteController::class, 'index']);
-    Route::post('/notes', [NoteController::class, 'store']);
-    Route::get('/notes/{note}', [NoteController::class, 'show']);
-    Route::put('/notes/{note}', [NoteController::class, 'update']);
-    Route::delete('/notes/{note}', [NoteController::class, 'destroy']);
-    Route::get('/bookmarks', [NoteController::class, 'bookmarks']);
+Route::put('/status', function (Request $request) {
+    if (!Storage::exists('data/status.json')) {
+        return response()->json(['message' => 'Status not found'], 404);
+    }
+    $validated = $request->validate([
+        'status' => 'required|boolean',
+    ]);
+    Storage::put('data/status.json', json_encode($validated, JSON_PRETTY_PRINT));
+    return response()->json(['message' => 'Status updated', 'data' => $validated]);
+});
+
+Route::delete('/status', function () {
+    if (Storage::exists('data/status.json')) {
+        Storage::delete('data/status.json');
+        return response()->json(['message' => 'Status deleted']);
+    }
+    return response()->json(['message' => 'Status not found'], 404);
 });

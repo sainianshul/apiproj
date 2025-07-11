@@ -1,4 +1,5 @@
 FROM php:8.2-cli
+
 RUN apt-get update && apt-get install -y \
     zip unzip curl git libpng-dev libonig-dev libxml2-dev \
     libzip-dev libssl-dev libcurl4-openssl-dev \
@@ -13,6 +14,8 @@ COPY . .
 COPY .env.example .env
 
 RUN chmod -R 775 storage bootstrap/cache
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN composer install --no-dev --optimize-autoloader
 

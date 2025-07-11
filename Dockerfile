@@ -1,29 +1,23 @@
-FROM php:8.2-cli
+# Start with PHP + Composer
+FROM php:8.2-apache
 
-RUN apt-get update && apt-get install -y \
-    zip unzip curl git libpng-dev libonig-dev libxml2-dev \
-    libzip-dev libssl-dev libcurl4-openssl-dev \
-    && docker-php-ext-install pdo pdo_mysql
+# Enable mod_rewrite
+RUN a2enmod rewrite
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www
+# Set working directory
+WORKDIR /var/www/html
 
+# Copy app files
 COPY . .
 
-COPY .env.example .env
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader
 
-RUN chmod -R 775 storage bootstrap/cache
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
-# Skip scripts that require DB
-RUN composer install --no-dev --optimize-autoloader --no-scripts
-
-# Later manually run artisan commands (DB-safe)
-RUN php artisan package:discover || true
-
-EXPOSE 10000
-
-CMD php artisan key:generate \
- && php artisan serve --host=0.0.0.0 --port=10000
+# Expose port
+EXPOSE 80
